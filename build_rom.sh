@@ -1,4 +1,13 @@
 #!/bin/bash
+set -e
+set -x
+
+# sync rom
+repo init -u git://github.com/crdroidandroid/android.git -b 11.0
+git clone https://github.com/Apon77Lab/android_.repo_local_manifests.git --depth 1 -b aex .repo/local_manifests
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
+
+#build rom
 cd /tmp/rom
 rm -rf .repo
 cd external/selinux 
@@ -10,7 +19,7 @@ wget https://github.com/phhusson/platform_frameworks_av/commit/624cfc90b8bedb024
 patch -p1 < *.patch
 cd /tmp/rom
 source build/envsetup.sh
-lunch aosp_RMX2001-userdebug
+lunch lineage_RMX2001-userdebug
 export ALLOW_MISSING_DEPENDENCIES=true
 export SKIP_API_CHECKS=true
 export SKIP_ABI_CHECKS=true
@@ -43,3 +52,11 @@ make_rom(){
 
 make_metalava
 make_rom 
+
+# upload rom
+up(){
+	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+	# 14 days, 10 GB limit
+}
+
+up out/target/product/RMX2001/*.zip
