@@ -3,7 +3,7 @@ crDroid custom ROM for Realme 6
 
 crDroid [Custom ROM](https://beebom.com/best-custom-roms-android-phones/) for Realme 6(code name RMX2001)
 
-Features(https://raw.githubusercontent.com/crdroidandroid/android/11.0/README.mkdn)
+[Features](https://crdroid.net)
 
 [Screenshots](https://crdroid.net/#screenshots)
 
